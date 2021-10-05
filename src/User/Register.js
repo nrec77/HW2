@@ -1,21 +1,28 @@
-import React from 'react'
+import React, {useState} from 'react'
 
-export default function Register() {
+export default function Register({dispatchUser}) {
+
+  const [ formData, setFormData ] = useState({
+    username: "",
+    password: "", 
+    passwordRepeat: ""
+})
+
   return (
-      <form onSubmit={e => e.preventDefault()}>
+      <form onSubmit={e => {e.preventDefault(); dispatchUser({type:"REGISTER", username:formData.username}); }}>
           <label htmlFor="register-username">Username : </label>
-          <input type="text" name="register-username" id="register-username" />
-          
-          <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <label htmlFor="register-password">Password : </label>
-          <input type="password" name="register-password" id="register-password" />
+          <input type="text" value={formData.username} onChange={e => setFormData({...formData, username: e.target.value})}  name="register-username" id="register-username" />
 
           <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <label htmlFor="register-password-repeat">Repeat password : </label>
-          <input type="password" name="register-password-repeat" id="register-password-repeat" />
+          <label htmlFor="register-password"> Password: </label>
+          <input type="password" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} name="register-password" id="register-password" />
+         
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <label htmlFor="register-password-repeat">Repeat password:</label>
+          <input type="password" value={formData.passwordRepeat} onChange={e => setFormData({...formData, passwordRepeat: e.target.value})}  name="register-password-repeat" id="register-password-repeat" />
           
           <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <input type="submit" value="Register" />
+          <input type="submit" value="Register" disabled={formData.username.length === 0 || formData.password.length === 0 || formData.password !== formData.passwordRepeat}  />
       </form>
   )
 }
