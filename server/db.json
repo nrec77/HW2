@@ -1,0 +1,27 @@
+{
+  "todos": [
+    {
+      "title": "ToDo Example 1",
+      "description": "Do Something 1",
+      "dateCreated": "Date Created 1",
+      "complete": false,
+      "dateCompleted": null,
+      "id": 1
+    },
+    {
+      "title": "ToDo Example 2",
+      "description": "Do Something 2",
+      "dateCreated": "Date Created 2",
+      "complete": false,
+      "dateCompleted": null,
+      "id": 2
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "password"
+    }
+  ]
+}

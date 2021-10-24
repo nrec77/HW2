@@ -1,40 +1,39 @@
-import {useState, useReducer, useEffect} from 'react';
+import {useReducer, useEffect} from 'react'
+import { useResource } from 'react-request-hook';
+import { StateContext } from './Contexts'
+import appReducer from './reducers'
 import UserBar from './User/UserBar'
 import CreateToDo from './CreateToDo'
 import ToDoList from './ToDoList'
-import appReducer from './reducers';
 
 function App() {
 
-  const initialToDo = [
-    {
-      title: "ToDo 1",
-      description: "Do Something 1",
-      dateCreated: Date.now(),
-      complete: "false",
-      dateCompleted: ""
-    },
-    {
-      title: "ToDo 2",
-      description: "Do Something 2",
-      dateCreated: Date.now(),
-      complete: "false",
-      dateCompleted: ""
+  const [ todos, getTodos ] = useResource(() => ({
+    url: '/todos',
+    method: 'get'
+  }))
+
+  const [ state, dispatch ] = useReducer(appReducer, { user: '', todos: [] })
+
+  const {user} = state;
+
+  useEffect(getTodos, [])
+
+  useEffect(() => {
+    if (todos && todos.data) {
+        dispatch({ type: 'FETCH_TODOS', todos: todos.data.reverse() })
     }
-  ]
-
-  const [ state, dispatch ] = useReducer(appReducer, { user: '', todos: initialToDo })
-
-  const {user, todos} = state;
+  }, [todos])
 
   return (
       <div>
-        <UserBar user={user} dispatchUser={dispatch}/>
-        <br></br><br></br>
-        {user && <CreateToDo user={user} dispatch={dispatch} /> }
-        <ToDoList todos={todos} />
-        </div>
+        <StateContext.Provider value={{state: state, dispatch: dispatch}}>
+          <UserBar />
+          <br/><hr/>
+          {user && <CreateToDo /> }
+          <ToDoList />
+        </StateContext.Provider>
+      </div>
   )
-
 }
 export default App;
