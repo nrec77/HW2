@@ -1,37 +1,43 @@
-import {useReducer, useEffect} from 'react'
-import { useResource } from 'react-request-hook';
+import React, { useReducer } from 'react'
+import { Router, View } from 'react-navi'
+import { mount, route } from 'navi'
 import { StateContext } from './Contexts'
-import appReducer from './reducers'
-import UserBar from './User/UserBar'
+
+import {Container} from 'react-bootstrap'
+
 import CreateToDo from './CreateToDo'
-import ToDoList from './ToDoList'
+import HeaderBar from './Pages/HeaderBar'
+
+import HomePage from './Pages/HomePage'
+import TodoPage from './Pages/TodoPage'
+import UsersPage from './Pages/UsersPage'
+
+import appReducer from './reducers'
 
 function App() {
 
-  const [ todos, getTodos ] = useResource(() => ({
-    url: '/todos',
-    method: 'get'
-  }))
+  
+  const [ state, dispatch ] = useReducer(appReducer, { user: {}, todos: [] })
 
-  const [ state, dispatch ] = useReducer(appReducer, { user: '', todos: [] })
+  const routes = mount({
+    '/': route({ view: <HomePage /> }),
+    '/users': route({view: <UsersPage /> }),
+    '/todo/create':route({ view: <CreateToDo /> }),
+    '/todo/:id': route(req => {
+        return { view: <TodoPage id={req.params.id} /> }
+    }),
+  })
 
-  const {user} = state;
-
-  useEffect(getTodos, [])
-
-  useEffect(() => {
-    if (todos && todos.data) {
-        dispatch({ type: 'FETCH_TODOS', todos: todos.data.reverse() })
-    }
-  }, [todos])
 
   return (
       <div>
         <StateContext.Provider value={{state: state, dispatch: dispatch}}>
-          <UserBar />
-          <br/><hr/>
-          {user && <CreateToDo /> }
-          <ToDoList />
+          <Router routes={routes}>
+            <Container>
+              <HeaderBar />
+              <View />
+            </Container>
+          </Router >
         </StateContext.Provider>
       </div>
   )

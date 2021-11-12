@@ -1,25 +1,29 @@
 import React, {useState, useContext, useEffect} from 'react'
+import { useNavigation } from 'react-navi'
 import { StateContext } from './Contexts'
 import { useResource } from 'react-request-hook'
 
 
 export default function CreateToDo () {
  
-    const {state, dispatch} = useContext(StateContext)
-    const {user} = state
-
-    const [todo , createTodo ] = useResource(({ title, description, dateCreated, complete, dateCompleted }) => ({
-        url: '/todos',
-        method: 'post',
-        data: { title, description, dateCreated, complete, dateCompleted }
-    }))
-
     const [ title, setTitle ] = useState('')
     const [ description, setDescription ] = useState('')
     const [ dateCreated, setDateCreated ] = useState('')
     const [ complete ] = useState(false)
     const [ dateCompleted ] = useState('')
-    
+
+    const navigation = useNavigation()
+
+    const {state, dispatch} = useContext(StateContext)
+    const {user} = state
+
+    const [todo , createTodo ] = useResource(({ title, description, dateCreated, complete, dateCompleted }) => ({
+        url: '/todo',
+        method: 'post',
+        headers: {"Authorization": `${state.user.access_token}`},
+        data: { title, description, dateCreated, complete, dateCompleted }
+    }))
+
     function handleTitle (evt) { setTitle(evt.target.value) }
 
     function handleDescription (evt) { setDescription(evt.target.value) }
@@ -31,9 +35,11 @@ export default function CreateToDo () {
     }
 
     useEffect(() => {
-        if (todo && todo.isLoading === false && todo.data) {
+        if (todo && todo.data) {
             dispatch({ type: 'CREATE_TODO', title: todo.data.title, description: todo.data.description, dateCreated: todo.data.dateCreated, 
                                             complete: todo.data.complete, dateCompleted: todo.data.dateCompleted, id: todo.data.id })
+            navigation.navigate(`/todo/${todo.data.id}`)
+
             console.log(todo.data)
         }
     }, [todo])
@@ -42,19 +48,19 @@ export default function CreateToDo () {
          
         <form name="form" onSubmit={e => {e.preventDefault(); handleCreate();} }>
             
-            <br/><div>Author: <b>{user}</b></div>
-
+            <div>Author: <b>{user.username}</b></div>
+            <br />
             <div>
-                <label htmlFor="create-title">Title : </label>
+                <label htmlFor="create-title">Title : &nbsp;</label>
                 <input type="text" value={title} onChange={handleTitle} name="create-title"  id="create-title" required="required" />
 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <label htmlFor="create=description">Description : </label>
+                <label htmlFor="create=description">Description : &nbsp;</label>
                 <input type="text" value={description} onChange={handleDescription} name="create-description"  id="create-description" />
             </div>
-
+            <br />
             <input type="submit" value="Create" onClick={handleDateCreated} />
-            <br/><br/><hr/>
+            <br/><hr/>
          </form>   
           )
  }

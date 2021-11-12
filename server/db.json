@@ -1,19 +1,19 @@
 {
   "todos": [
     {
-      "title": "ToDo Example 1",
-      "description": "Do Something 1",
-      "dateCreated": "Date Created 1",
+      "title": "Test 1",
+      "description": "Test 1",
+      "dateCreated": "10/29/2021",
       "complete": false,
-      "dateCompleted": null,
+      "dateCompleted": 1636002767640,
       "id": 1
     },
     {
-      "title": "ToDo Example 2",
-      "description": "Do Something 2",
-      "dateCreated": "Date Created 2",
+      "title": "Test 2",
+      "description": "Test 2",
+      "dateCreated": "10/29/2021",
       "complete": false,
-      "dateCompleted": null,
+      "dateCompleted": 1636002768417,
       "id": 2
     }
   ],
@@ -22,6 +22,11 @@
       "id": 1,
       "username": "admin",
       "password": "password"
+    },
+    {
+      "username": "nick",
+      "password": "aa",
+      "id": 2
     }
   ]
 }

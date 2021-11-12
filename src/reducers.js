@@ -1,14 +1,16 @@
 function userReducer (state, action) {
     switch (action.type) {
-
         case 'LOGIN':
-
-        case 'REGISTER':
-            return action.username
-
-        case 'LOGOUT':
-            return ''
-
+        case 'REGISTER':
+            return {
+                'username': action.username,
+                'access_token': action.access_token
+            }
+        case 'LOGOUT':
+            return {
+                'username': undefined,
+                'access_token': undefined
+            }
         default:
             return state;
     }
@@ -32,17 +34,16 @@ function userReducer (state, action) {
             return [ newToDo, ...state ]
 
         case 'TOGGLE_TODO':
-            return state.map((p, i) => {
-                if(i === action.todoId) {
+            return state.map((p) => {
+                if(p.id === action.todoId) {
                     p.complete = action.complete;
-                    p.dateCompleted = new Date().toLocaleDateString('en-us');
-                    console.log(p)
+                    p.dateCompleted = action.dateCompelted
                 }
                 return p;
             })
 
         case 'DELETE_TODO':
-            return state.filter((p, i) => i !== action.todoId)
+            return state.filter((p) => p.id !== action.todoId)
 
         default:
            return state;
