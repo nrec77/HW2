@@ -1,16 +1,23 @@
-import React, { useContext } from 'react'
-import { StateContext } from './Contexts'
+import React, { useResource, useEffect } from 'react'
 import User from './User'
 
 export default function UsersList () {
 
-      const {state} = useContext(StateContext)
-      const {user} = state
+
+      const [ users, getUsers ] = useResource(() => ({
+            url: '/users',
+            method: 'get',
+          }))
+
+          useEffect(() =>{
+            getUsers()
+        }, [users])
 
      return (
+
       <div>
-            {user.length === 0 && <h2>No users found</h2>}
-            {user.length > 0 && user.map((p, i) => <User {...p} username={p.username} key={'user-' + i} />)}
+            {users.length === 0 && <h2>No users found</h2>}
+            {users.length > 0 && users.map((p, i) => <User {...p} username={p.username} key={'user-' + i} />)}
       </div> 
       )
 }

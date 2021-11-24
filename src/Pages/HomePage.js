@@ -18,7 +18,7 @@ export default function HomePage () {
         getTodos()
     }, [state.user])
 
-    
+
     useEffect(() => {
     if (todos && todos.isLoading === false && todos.data) {
         console.log(todos.data)

@@ -28,6 +28,7 @@ function ToDo({ title, description, dateCreated, complete, dateCompleted, todoId
     }
   }))
   
+
   useEffect(() => {
     if (todo_delete && todo_delete.data && todo_delete.isLoading === false) {
       dispatch({ type: 'DELETE_TODO', todoId: todoId })

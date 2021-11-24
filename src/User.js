@@ -7,6 +7,7 @@ import { StateContext } from './Contexts'
 function User({ username }) {
         <div>
             {username}
+            <br />
         </div>
 }
 
