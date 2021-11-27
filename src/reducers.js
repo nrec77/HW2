@@ -9,7 +9,7 @@ function userReducer (state, action) {
         case 'LOGOUT':
             return {
                 'username': undefined,
-                'access_token': undefined
+                'access_token': undefined,
             }
         default:
             return state;
@@ -21,7 +21,6 @@ function userReducer (state, action) {
 
         case 'FETCH_TODOS':
             return action.todos
-
         case 'CREATE_TODO':
           const newToDo = { 
               title: action.title,
@@ -29,13 +28,13 @@ function userReducer (state, action) {
               dateCreated: action.dateCreated,
               complete: false,
               dateCompelted: undefined,
-              id: action.id
+              _id: action._id
             }
             return [ newToDo, ...state ]
 
         case 'TOGGLE_TODO':
             return state.map((p) => {
-                if(p.id === action.todoId) {
+                if(p._id === action.todoId) {
                     p.complete = action.complete;
                     p.dateCompleted = action.dateCompelted
                 }
@@ -43,7 +42,7 @@ function userReducer (state, action) {
             })
 
         case 'DELETE_TODO':
-            return state.filter((p) => p.id !== action.todoId)
+            return state.filter((p) => p._id !== action.todoId)
 
         default:
            return state;

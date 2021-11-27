@@ -1,15 +1,25 @@
-import React, { useContext, useEffect } from 'react'
-import { ListGroup, ListGroupItem, Button, Card, } from 'react-bootstrap'
-import { useResource } from 'react-request-hook'
-import { StateContext } from './Contexts'
+import React from 'react'
+import { Card } from 'react-bootstrap'
+import { Link } from 'react-navi'
 
 
-function User({ username }) {
-        <div>
-            {username}
-            <br />
-        </div>
-}
+export default function User({ username, id }) {
+
+    return (
+
+        <>
+        <Card >
+          <Card.Header>
+            <h4><b>{username}</b></h4>
+          </Card.Header>
+          <Card.Body>
+            <Link href={`/users/${id}`}>{username}'s Todo's</Link>
+          </Card.Body>
+        </ Card>
+        <br />
+        </>
+        
+)}
 
 
-export default React.memo(User);
+

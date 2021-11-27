@@ -37,8 +37,8 @@ export default function CreateToDo () {
     useEffect(() => {
         if (todo && todo.data) {
             dispatch({ type: 'CREATE_TODO', title: todo.data.title, description: todo.data.description, dateCreated: todo.data.dateCreated, 
-                                            complete: todo.data.complete, dateCompleted: todo.data.dateCompleted, id: todo.data.id })
-            navigation.navigate(`/todo/${todo.data.id}`)
+                                            complete: todo.data.complete, dateCompleted: todo.data.dateCompleted, id: todo.data._id })
+            navigation.navigate(`/todo/${todo.data._id}`)
 
             console.log(todo.data)
         }

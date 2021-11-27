@@ -11,7 +11,7 @@ import HeaderBar from './Pages/HeaderBar'
 import HomePage from './Pages/HomePage'
 import TodoPage from './Pages/TodoPage'
 import UsersPage from './Pages/UsersPage'
-
+import UserTodosPage from './Pages/UserTodosPage'
 import appReducer from './reducers'
 
 function App() {
@@ -22,6 +22,9 @@ function App() {
   const routes = mount({
     '/': route({ view: <HomePage /> }),
     '/users': route({view: <UsersPage /> }),
+    '/users/:id': route(req => {
+      return { view: <UserTodosPage id={req.params.id} /> }
+  }),
     '/todo/create':route({ view: <CreateToDo /> }),
     '/todo/:id': route(req => {
         return { view: <TodoPage id={req.params.id} /> }

@@ -10,7 +10,7 @@ export default function ToDoList () {
      return (
       <div>
             {todos.length === 0 && <h2>No todos found for current user</h2>}
-            {todos.length > 0 && todos.map((p, i) => <ToDo {...p} short={true} title={p.title} description ={p.description} dateCreated={p.dateCreated} complete={p.complete} dateCompleted={p.dateCompleted} key={'todo-' + i}  todoId={p.id} />)}
+            {todos.length > 0 && todos.map((p, i) => <ToDo {...p} short={true} title={p.title} description ={p.description} dateCreated={p.dateCreated} complete={p.complete} dateCompleted={p.dateCompleted} key={'todo-' + i}  todoId={p._id} />)}
       </div> 
       )
 }
